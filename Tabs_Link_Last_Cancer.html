@@ -240,9 +240,17 @@
                 
                 <button onclick="myFunction()">Vui lòng chọn file EMR để truy vấn EMR chuyên sâu của bạn.</button>
 
-                
 
-             <!-- include jQuery library -->
+                <div class="col-8">
+                <input type="file" class="filepond uploader" name="file" multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="1">
+                    <div class="result text-center">
+                        <div class="" id="result-message"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- include jQuery library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
     <!-- include FilePond library -->
@@ -314,22 +322,15 @@
         });
     </script>
 
-
-        $('.uploader').filepond('allowMultiple', true);
-
-            $('.uploader').on('FilePond:addfile', function (e) {
-                var result = window.document.querySelector("#result-message");
-                result.classList.remove('animate__animated', 'animate__bounceInUp', 'text-danger', 'text-success');
-                result.textContent = "";
-            });
-
-            $('.uploader').on('FilePond:addfile', function (e) {
-                console.log('file added event', e);
-            });
+                
 
 
 
 
+
+
+
+                
             <div class="tabs__tab" id="Liêm hệ" data-tab-info>
                 <p>Công ty TNHH MTV Minh Trí và những người bạn Marie Curie.</p>
                 <p> 159 Nam Kỳ Khởi Nghĩa, Quận 3, Tp. Hồ Chí Minh</p>                
