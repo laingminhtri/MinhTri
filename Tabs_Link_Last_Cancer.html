@@ -314,7 +314,19 @@
         });
     </script>
 
-    
+
+        $('.uploader').filepond('allowMultiple', true);
+
+            $('.uploader').on('FilePond:addfile', function (e) {
+                var result = window.document.querySelector("#result-message");
+                result.classList.remove('animate__animated', 'animate__bounceInUp', 'text-danger', 'text-success');
+                result.textContent = "";
+            });
+
+            $('.uploader').on('FilePond:addfile', function (e) {
+                console.log('file added event', e);
+            });
+
 
 
 
