@@ -614,25 +614,14 @@
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script>
-        $(function () {            
-            // First register any plugins
+        $(function () {
             $.fn.filepond.registerPlugin(FilePondPluginImagePreview);
 
-            // Turn input element into a pond
             $('.uploader').filepond({
-
-                // maximum allowed file size
                 maxFileSize: '5MB',
-
-                // crop the image to a 1:1 ratio
                 imageCropAspectRatio: '1:1',
-
-                // resize the image
                 imageResizeTargetWidth: 500,
-
                 imagePreviewMaxHeight: window.innerHeight * 3 / 5,
-
-                // upload to this server end point
                 server: {
                     url: '/upload_file',
                     timeout: 60000,
@@ -641,19 +630,19 @@
                         withCredentials: false,
                         onload: (response) => {
                             var result = window.document.querySelector("#result-message");
-                            if (response == '[[1.0]]') {
-                                result.classList.add('text-success');
-                                result.textContent = "NON-NODULE";
-                            } else {
-                                result.textContent = "NODULE";
+                            var data = JSON.parse(response);
+                            if (data.error) {
                                 result.classList.add('text-danger');
+                                result.textContent = data.error;
+                            } else {
+                                result.classList.add('text-success');
+                                result.innerHTML = `File uploaded and processed successfully! <a href="${data.report_url}" target="_blank">View Report</a>`;
                             }
-                            result.classList.add("animate__animated", "animate__bounceInUp");
+                            result.classList.add('animate__animated', 'animate__bounceInUp');
                         }
                     },
                 },
             });
-
 
             $('.uploader').filepond('allowMultiple', true);
 
