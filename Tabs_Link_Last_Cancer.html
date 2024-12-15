@@ -619,6 +619,24 @@
         });
     </script>
 
+
+    <script>
+        function runScript() {
+            fetch('/run-script', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    data.forEach(result => {
+                        const p = document.createElement('p');
+                        p.textContent = result;
+                        resultsDiv.appendChild(p);
+                    });
+                });
+        }
+    </script>
+
+
     
 
 
