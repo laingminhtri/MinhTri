@@ -738,7 +738,45 @@ y_test.forEach((actual, i) => {
 });
 </script>
 
+<script>
 
+const tf = require('@tensorflow/tfjs');
+
+// Example input data (replace these with your actual data)
+let X_test = ... // Load or define your feature data
+let y_test = ... // Load or define your target labels
+
+// Convert the data to tensors
+const X_test_tensor = tf.tensor2d(X_test);
+const y_test_tensor = tf.tensor1d(y_test, 'int32');
+
+// Define a simple model (replace with a decision tree if you prefer)
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 32, activation: 'relu', inputShape: [X_test[0].length] }));
+model.add(tf.layers.dense({ units: 1, activation: 'sigmoid' }));
+
+// Compile the model
+model.compile({ optimizer: 'adam', loss: 'binaryCrossentropy', metrics: ['accuracy'] });
+
+// Train the model (ideally, you'd train on a separate training set, not X_test)
+async function trainAndEvaluate() {
+  await model.fit(X_test_tensor, y_test_tensor, { epochs: 10, batchSize: 32 });
+
+  // Make predictions
+  const predictions = model.predict(X_test_tensor);
+  const predictedValues = predictions.arraySync().map(prediction => prediction > 0.5 ? 1 : 0);  // Apply threshold
+
+  // Compare predictions to actual values
+  for (let i = 0; i < y_test.length; i++) {
+    if (predictedValues[i] !== y_test[i]) {
+      console.log(`Pred: ${predictedValues[i]}\nActual: ${y_test[i]}\n`);
+    }
+  }
+}
+
+// Run the function
+trainAndEvaluate();
+</script>
 
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
