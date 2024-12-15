@@ -687,6 +687,60 @@ process: {
 
 
 
+<script>
+const tf = require('@tensorflow/tfjs');
+const { LabelEncoder } = require('some-label-encoder-library'); // You can create your own LabelEncoder
+
+// Assume X_test, y_test, and model are already loaded or defined elsewhere
+
+// Step 1: Encode non-numerical columns in X_test
+let labelEncoder = new LabelEncoder();  // Create a LabelEncoder instance
+
+// Loop through each column in X_test that contains non-numeric values
+X_test.columns.forEach(column => {
+  if (typeof X_test[column][0] === 'string') { // Check if the column has non-numeric data
+    X_test[column] = labelEncoder.fitTransform(X_test[column]);  // Encode the column
+  }
+});
+
+// Step 2: Use X_test for prediction
+let predictions = model.predict(X_test);
+
+// Assuming the model returns probabilities (binary classification), we threshold at 0.5
+let predictedDiseases = predictions.arraySync().map(prediction => {
+  return prediction > 0.5 ? 1 : 0;  // Convert to binary labels (0 or 1)
+});
+
+// Step 3: Print the predicted diseases
+console.log(predictedDiseases);
+
+// Step 4: Create and train the DecisionTreeClassifier
+// In JavaScript, we don't have a direct equivalent to DecisionTreeClassifier like in scikit-learn, 
+// so you will need to implement it using another library or use pre-trained models.
+
+// For simplicity, let's assume we use TensorFlow.js to create a simple decision tree model.
+const decisionTreeModel = tf.sequential();
+// You'd typically create and train your decision tree model here. This is just a placeholder for illustration.
+// decisionTreeModel.add(...);
+
+decisionTreeModel.compile({ optimizer: 'adam', loss: 'binaryCrossentropy' });
+await decisionTreeModel.fit(X_train, y_train, { epochs: 10 });
+
+// Step 5: Predict using the trained DecisionTree model
+let diseasePred = decisionTreeModel.predict(X_test);
+diseasePred = diseasePred.arraySync().map(prediction => prediction > 0.5 ? 1 : 0);
+
+// Step 6: Compare predictions with actual values
+y_test.forEach((actual, i) => {
+  if (diseasePred[i] !== actual) {
+    console.log(`Pred: ${diseasePred[i]}\nActual: ${actual}\n`);
+  }
+});
+</script>
+
+
+
+
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
                 <p>Công ty TNHH MTV Minh Trí và những người bạn Marie Curie.</p>
                 <p> 159 Nam Kỳ Khởi Nghĩa, Quận 3, Tp. Hồ Chí Minh</p>                
