@@ -20,12 +20,12 @@
         }
 
         body {
-            /* position: absolute;
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            content: ''; */
+            content: '';
             
         }
 
@@ -537,20 +537,20 @@
                 server: {
                     url: '/upload_file',
                     timeout: 60000,
-                    // process: {
-                    //     method: 'POST',
-                    //     withCredentials: false,
-                    //     onload: (response) => {
-                    //         var result = window.document.querySelector("#result-message");
-                    //         var data = JSON.parse(response);
-                    //         if (data.error) {
-                    //             result.classList.add('text-danger');
-                    //             result.textContent = data.error;
-                    //         } else {
-                    //             result.classList.add('text-success');
-                    //             result.innerHTML = `File uploaded and processed successfully! <a href="${data.report_url}" target="_blank">View Report</a>`;
-                    //         }
-                    //         result.classList.add('animate__animated', 'animate__bounceInUp');
+                    process: {
+                        method: 'POST',
+                        withCredentials: false,
+                        onload: (response) => {
+                            var result = window.document.querySelector("#result-message");
+                            var data = JSON.parse(response);
+                            if (data.error) {
+                                result.classList.add('text-danger');
+                                result.textContent = data.error;
+                            } else {
+                                result.classList.add('text-success');
+                                result.innerHTML = `File uploaded and processed successfully! <a href="${data.report_url}" target="_blank">View Report</a>`;
+                            }
+                            result.classList.add('animate__animated', 'animate__bounceInUp');
                         }
                     },
                 },
@@ -625,20 +625,20 @@
                 server: {
                     url: '/upload_file',
                     timeout: 60000,
-                    // process: {
-                    //     method: 'POST',
-                    //     withCredentials: false,
-                    //     onload: (response) => {
-                    //         var result = window.document.querySelector("#result-message");
-                    //         var data = JSON.parse(response);
-                    //         if (data.error) {
-                    //             result.classList.add('text-danger');
-                    //             result.textContent = data.error;
-                    //         } else {
-                    //             result.classList.add('text-success');
-                    //             result.innerHTML = `File uploaded and processed successfully! <a href="${data.report_url}" target="_blank">View Report</a>`;
-                    //         }
-                    //         result.classList.add('animate__animated', 'animate__bounceInUp');
+                    process: {
+                        method: 'POST',
+                        withCredentials: false,
+                        onload: (response) => {
+                            var result = window.document.querySelector("#result-message");
+                            var data = JSON.parse(response);
+                            if (data.error) {
+                                result.classList.add('text-danger');
+                                result.textContent = data.error;
+                            } else {
+                                result.classList.add('text-success');
+                                result.innerHTML = `File uploaded and processed successfully! <a href="${data.report_url}" target="_blank">View Report</a>`;
+                            }
+                            result.classList.add('animate__animated', 'animate__bounceInUp');
                                                     }
                     },
                 },
