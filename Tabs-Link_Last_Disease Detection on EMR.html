@@ -841,6 +841,26 @@ trainAndEvaluate();
         comparePredictions(diseasePred, diseaseReal);
     </script>
 
+
+    <pre id="output"></pre>
+
+    <script>
+        // Example data (replace with actual data)
+        let disease_pred = [1, 0, 1, 0, 1];  // Predicted disease values (e.g., 1 = Disease present, 0 = Disease absent)
+        let disease_real = [1, 1, 0, 0, 1];  // Actual disease values (same format)
+
+        // Get the element where we will display the differences
+        let outputElement = document.getElementById("output");
+
+        // Loop through the data arrays and compare predictions with actual values
+        for (let i = 0; i < disease_real.length; i++) {
+            if (disease_pred[i] !== disease_real[i]) {
+                // Print the difference (Predicted vs Actual)
+                outputElement.textContent += `Pred: ${disease_pred[i]} | Actual: ${disease_real[i]}\n`;
+            }
+        }
+    </script>
+
     
 
 
