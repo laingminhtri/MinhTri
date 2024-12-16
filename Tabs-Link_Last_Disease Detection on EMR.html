@@ -935,22 +935,25 @@ trainAndEvaluate();
                 }
 
                 // Compare the predicted and actual values
+                let outputText = '';
                 for (let i = 0; i < disease_real.length; i++) {
                     if (disease_pred[i] !== disease_real[i]) {
-                        outputElement.textContent += `Pred: ${disease_pred[i]} | Actual: ${disease_real[i]}\n`;
+                        // Collect the differences to display
+                        outputText += `Pred: ${disease_pred[i]} | Actual: ${disease_real[i]}\n`;
                     }
                 }
 
-                if (outputElement.textContent === '') {
-                    outputElement.textContent = 'No differences found.';
+                // Display the result
+                if (outputText === '') {
+                    outputText = 'No differences found between predicted and actual values.';
                 }
+                outputElement.textContent = outputText;
             };
 
             // Read the file as text
             reader.readAsText(file);
         }
     </script>
-
 
 
 
