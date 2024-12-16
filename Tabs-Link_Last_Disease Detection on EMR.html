@@ -820,6 +820,26 @@ trainAndEvaluate();
             }
         }
     </script>
+
+
+    <script>
+        // Assuming you have the predicted and actual disease labels in two arrays:
+        const diseasePred = ["diseaseA", "diseaseB", "diseaseA", "diseaseC"];
+        const diseaseReal = ["diseaseA", "diseaseB", "diseaseC", "diseaseC"];
+
+        // Function to compare and print mismatches
+        function comparePredictions(pred, real) {
+            for (let i = 0; i < pred.length; i++) {
+                if (pred[i] !== real[i]) {
+                    console.log(`Pred: ${pred[i]}\nActual: ${real[i]}\n`);
+                }
+            }
+        }
+
+        // Call the comparison function
+        comparePredictions(diseasePred, diseaseReal);
+    </script>
+
     
 
 
