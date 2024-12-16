@@ -778,6 +778,25 @@ async function trainAndEvaluate() {
 trainAndEvaluate();
 </script>
 
+<pre id="output"></pre>
+
+    <script>
+        // Sample data (you would replace this with your actual data arrays)
+        let disease_pred = [1, 0, 1, 0, 1];  // Example predicted values
+        let disease_real = [1, 1, 0, 0, 1];  // Example actual values
+        
+        // Get the output element
+        let outputElement = document.getElementById("output");
+
+        // Loop through the arrays and compare values
+        for (let i = 0; i < disease_real.length; i++) {
+            if (disease_pred[i] !== disease_real[i]) {
+                // Format the output to show predicted vs actual
+                outputElement.textContent += `Pred: ${disease_pred[i]}\nActual: ${disease_real[i]}\n\n`;
+            }
+        }
+    </script>
+
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
                 <p>Công ty TNHH MTV Minh Trí và những người bạn Marie Curie.</p>
