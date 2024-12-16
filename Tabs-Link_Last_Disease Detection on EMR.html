@@ -888,6 +888,75 @@ trainAndEvaluate();
     </script>
 
 
+<!-- File input for CSV file -->
+    <input type="file" id="fileInput" accept=".csv">
+    <button onclick="processFile()">Compare Predictions</button>
+
+    <!-- Area to display output -->
+    <pre id="output"></pre>
+
+    <script>
+        function processFile() {
+            const fileInput = document.getElementById('fileInput');
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = ''; // Clear previous output
+
+            if (fileInput.files.length === 0) {
+                alert('Please upload a file.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const contents = e.target.result;
+                const lines = contents.split('\n');
+                
+                // Arrays to store predicted and actual values
+                const disease_pred = [];
+                const disease_real = [];
+
+                // Process CSV lines (assuming header is in the first row)
+                for (let i = 1; i < lines.length; i++) { // Start from 1 to skip header
+                    const line = lines[i].trim();
+                    if (line) {
+                        const columns = line.split(',');
+
+                        // Assuming the CSV has "Predicted" in column 0 and "Actual" in column 1
+                        const pred = parseInt(columns[0]);
+                        const real = parseInt(columns[1]);
+
+                        if (!isNaN(pred) && !isNaN(real)) {
+                            disease_pred.push(pred);
+                            disease_real.push(real);
+                        }
+                    }
+                }
+
+                // Compare the predicted and actual values
+                for (let i = 0; i < disease_real.length; i++) {
+                    if (disease_pred[i] !== disease_real[i]) {
+                        outputElement.textContent += `Pred: ${disease_pred[i]} | Actual: ${disease_real[i]}\n`;
+                    }
+                }
+
+                if (outputElement.textContent === '') {
+                    outputElement.textContent = 'No differences found.';
+                }
+            };
+
+            // Read the file as text
+            reader.readAsText(file);
+        }
+    </script>
+
+
+
+
+
+    
+
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
                 <p>Công ty TNHH MTV Minh Trí và những người bạn Marie Curie.</p>
                 <p> 159 Nam Kỳ Khởi Nghĩa, Quận 3, Tp. Hồ Chí Minh</p>                
