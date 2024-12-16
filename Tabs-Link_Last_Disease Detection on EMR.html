@@ -861,7 +861,31 @@ trainAndEvaluate();
         }
     </script>
 
-    
+
+
+
+    <script>
+        // Assuming you have the predicted and actual disease labels in two arrays:
+        const diseasePred = ["diseaseA", "diseaseB", "diseaseA", "diseaseC"];
+        const diseaseReal = ["diseaseA", "diseaseB", "diseaseC", "diseaseC"];
+
+        // Function to compare and display mismatches
+        function compareAndDisplay(pred, real) {
+            const resultsDiv = document.getElementById("comparison-results");
+            resultsDiv.innerHTML = ""; // Clear previous results
+
+            for (let i = 0; i < pred.length; i++) {
+                if (pred[i] !== real[i]) {
+                    const p = document.createElement("p");
+                    p.textContent = `Pred: ${pred[i]}\nActual: ${real[i]}\n`;
+                    resultsDiv.appendChild(p);
+                }
+            }
+        }
+
+        // Call the comparison function
+        compareAndDisplay(diseasePred, diseaseReal);
+    </script>
 
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
