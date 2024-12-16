@@ -798,6 +798,31 @@ trainAndEvaluate();
     </script>
 
 
+</script>
+
+<pre id="output"></pre>
+
+    <script>
+        // Sample data (you would replace this with your actual data arrays)
+        let disease_pred = clf_dt.predict(X)  // Example predicted values
+        let disease_real = y.values  // Example actual values
+        
+        // Get the output element
+        let outputElement = document.getElementById("output");
+
+        // Loop through the arrays and compare values
+        for i in range(0, len(disease_real)):
+    if disease_pred[i]!=disease_real[i]:
+
+                // Format the output to show predicted vs actual
+               outputElement.textContent += ('Pred: {0}\nActual: {1}\n'.format(disease_pred[i], disease_real[i]));
+
+            }
+        }
+    </script>
+    
+
+
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
                 <p>Công ty TNHH MTV Minh Trí và những người bạn Marie Curie.</p>
                 <p> 159 Nam Kỳ Khởi Nghĩa, Quận 3, Tp. Hồ Chí Minh</p>                
