@@ -832,6 +832,7 @@ trainAndEvaluate();
             for (let i = 0; i < pred.length; i++) {
                 if (pred[i] !== real[i]) {
                     console.log(`Pred: ${pred[i]}\nActual: ${real[i]}\n`);
+                outputElement.textContent += ('Pred: {0}\nActual: {1}\n'.format(disease_pred[i], disease_real[i]));
                 }
             }
         }
