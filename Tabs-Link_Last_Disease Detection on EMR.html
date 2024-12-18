@@ -778,10 +778,10 @@ y_test.forEach((actual, i) => {
             })
             .then(response => response.json())
             .then(result => {
-                if (result.predicted_disease && result.actual_disease) {
+                if (result.disease_pred && result.disease_real) {
                     // Display predicted and actual diseases
-                    document.getElementById('predicted-disease').textContent = result.predicted_disease;
-                    document.getElementById('actual-disease').textContent = result.actual_disease;
+                    document.getElementById('disease_pred').textContent = result.disease_pred;
+                    document.getElementById('disease_real').textContent = result.disease_real;
                 } else {
                     // Handle errors from the server (e.g., invalid file type)
                     alert('Error: ' + result.error);
