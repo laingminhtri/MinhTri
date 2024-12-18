@@ -958,6 +958,43 @@ trainAndEvaluate();
 
 
 
+    <script>
+        // Example features, modify this according to your input data structure
+        const features = [5.1, 3.5, 1.4, 0.2];  // Sample feature vector
+        const actualDisease = "Iris-setosa";  // Actual disease (ground truth)
+
+        // Prepare the data to send to the server
+        const data = {
+            features: features,
+            actual_disease: actualDisease
+        };
+
+        // Send POST request to server
+        fetch('http://localhost:5000/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Display predicted disease and actual disease
+            const predictedDisease = result.predicted_disease;
+            const actualDisease = result.actual_disease;
+
+            // Display the results on the webpage
+            document.getElementById('prediction-result').textContent = `Predicted Disease: ${predictedDisease}`;
+            document.getElementById('actual-disease').textContent = `Actual Disease: ${actualDisease}`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+
+
+
+
     
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
