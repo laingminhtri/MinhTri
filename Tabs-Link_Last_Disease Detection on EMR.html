@@ -776,184 +776,19 @@ async function trainAndEvaluate() {
 
 // Run the function
 trainAndEvaluate();
-</script>
-
-<pre id="output"></pre>
-
-    <script>
-        // Sample data (you would replace this with your actual data arrays)
-        let disease_pred = [1, 0, 1, 0, 1];  // Example predicted values
-        let disease_real = [1, 1, 0, 0, 1];  // Example actual values
-        
-        // Get the output element
-        let outputElement = document.getElementById("output");
-
-        // Loop through the arrays and compare values
-        for (let i = 0; i < disease_real.length; i++) {
-            if (disease_pred[i] !== disease_real[i]) {
-                // Format the output to show predicted vs actual
-                outputElement.textContent += `Pred: ${disease_pred[i]}\nActual: ${disease_real[i]}\n\n`;
-            }
-        }
-    </script>
-
-
-</script>
-
-<pre id="output"></pre>
-
-    <script>
-        // Sample data (you would replace this with your actual data arrays)
-        let disease_pred = clf_dt.predict(X)  // Example predicted values
-        let disease_real = y.values  // Example actual values
-        
-        // Get the output element
-        let outputElement = document.getElementById("output");
-
-        // Loop through the arrays and compare values
-        for i in range(0, len(disease_real)):
-    if disease_pred[i]!=disease_real[i]:
-
-                // Format the output to show predicted vs actual
-               outputElement.textContent += ('Pred: {0}\nActual: {1}\n'.format(disease_pred[i], disease_real[i]));
-
-            }
-        }
-    </script>
-
-
-    <script>
-        // Assuming you have the predicted and actual disease labels in two arrays:
-        const diseasePred = ["diseaseA", "diseaseB", "diseaseA", "diseaseC"];
-        const diseaseReal = ["diseaseA", "diseaseB", "diseaseC", "diseaseC"];
-
-        // Function to compare and print mismatches
-        function comparePredictions(pred, real) {
-            for (let i = 0; i < pred.length; i++) {
-                if (pred[i] !== real[i]) {
-                    console.log(`Pred: ${pred[i]}\nActual: ${real[i]}\n`);
-                outputElement.textContent += ('Pred: {0}\nActual: {1}\n'.format(disease_pred[i], disease_real[i]));
-                }
-            }
-        }
-
-        // Call the comparison function
-        comparePredictions(diseasePred, diseaseReal);
-    </script>
-
-
-    <pre id="output"></pre>
-
-    <script>
-        // Example data (replace with actual data)
-        let disease_pred = [1, 0, 1, 0, 1];  // Predicted disease values (e.g., 1 = Disease present, 0 = Disease absent)
-        let disease_real = [1, 1, 0, 0, 1];  // Actual disease values (same format)
-
-        // Get the element where we will display the differences
-        let outputElement = document.getElementById("output");
-
-        // Loop through the data arrays and compare predictions with actual values
-        for (let i = 0; i < disease_real.length; i++) {
-            if (disease_pred[i] !== disease_real[i]) {
-                // Print the difference (Predicted vs Actual)
-                outputElement.textContent += `Pred: ${disease_pred[i]} | Actual: ${disease_real[i]}\n`;
-            }
-        }
-    </script>
 
 
 
-
-    <script>
-        // Assuming you have the predicted and actual disease labels in two arrays:
-        const diseasePred = ["diseaseA", "diseaseB", "diseaseA", "diseaseC"];
-        const diseaseReal = ["diseaseA", "diseaseB", "diseaseC", "diseaseC"];
-
-        // Function to compare and display mismatches
-        function compareAndDisplay(pred, real) {
-            const resultsDiv = document.getElementById("comparison-results");
-            resultsDiv.innerHTML = ""; // Clear previous results
-
-            for (let i = 0; i < pred.length; i++) {
-                if (pred[i] !== real[i]) {
-                    const p = document.createElement("p");
-                    p.textContent = `Pred: ${pred[i]}\nActual: ${real[i]}\n`;
-                    resultsDiv.appendChild(p);
-                }
-            }
-        }
-
-        // Call the comparison function
-        compareAndDisplay(diseasePred, diseaseReal);
-    </script>
+  
 
 
-<!-- File input for CSV file -->
-    <input type="file" id="fileInput" accept=".csv">
-    <button onclick="processFile()">Compare Predictions</button>
+   
 
-    <!-- Area to display output -->
-    <pre id="output"></pre>
 
-    <script>
-        function processFile() {
-            const fileInput = document.getElementById('fileInput');
-            const outputElement = document.getElementById('output');
-            outputElement.textContent = ''; // Clear previous output
+    
 
-            if (fileInput.files.length === 0) {
-                alert('Please upload a file.');
-                return;
-            }
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
 
-            reader.onload = function(e) {
-                const contents = e.target.result;
-                const lines = contents.split('\n');
-                
-                // Arrays to store predicted and actual values
-                const disease_pred = [];
-                const disease_real = [];
-
-                // Process CSV lines (assuming header is in the first row)
-                for (let i = 1; i < lines.length; i++) { // Start from 1 to skip header
-                    const line = lines[i].trim();
-                    if (line) {
-                        const columns = line.split(',');
-
-                        // Assuming the CSV has "Predicted" in column 0 and "Actual" in column 1
-                        const pred = parseInt(columns[0]);
-                        const real = parseInt(columns[1]);
-
-                        if (!isNaN(pred) && !isNaN(real)) {
-                            disease_pred.push(pred);
-                            disease_real.push(real);
-                        }
-                    }
-                }
-
-                // Compare the predicted and actual values
-                let outputText = '';
-                for (let i = 0; i < disease_real.length; i++) {
-                    if (disease_pred[i] !== disease_real[i]) {
-                        // Collect the differences to display
-                        outputText += `Pred: ${disease_pred[i]} | Actual: ${disease_real[i]}\n`;
-                    }
-                }
-
-                // Display the result
-                if (outputText === '') {
-                    outputText = 'No differences found between predicted and actual values.';
-                }
-                outputElement.textContent = outputText;
-            };
-
-            // Read the file as text
-            reader.readAsText(file);
-        }
-    </script>
 
 
 
