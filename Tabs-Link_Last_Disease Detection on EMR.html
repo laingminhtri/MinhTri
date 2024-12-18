@@ -744,15 +744,17 @@ y_test.forEach((actual, i) => {
 
   
 
-
-   
-
-
+    <!-- File Upload Form -->
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="file">Upload CSV file for prediction:</label>
+        <input type="file" id="file" name="file" required>
+        <button type="submit">Upload and Predict</button>
+    </form>
     
-
-
-
-
+    <h2>Prediction Results:</h2>
+    <p><strong>Predicted Disease:</strong> <span id="predicted-disease"></span></p>
+    <p><strong>Actual Disease:</strong> <span id="actual-disease"></span></p>
+ 
 
 
 
