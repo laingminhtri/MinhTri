@@ -796,6 +796,65 @@ y_test.forEach((actual, i) => {
 
 
 
+
+<!-- File Upload Form -->
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="file">Upload CSV file for prediction:</label>
+        <input type="file" id="file" name="file" required>
+        <button type="submit">Upload and Predict</button>
+    </form>
+    
+    <h2>Mismatches (Predicted vs Actual):</h2>
+    <div id="mismatch-results"></div>
+
+    <script>
+        // Handle form submission for file upload
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission behavior
+            
+            // Get the file input element
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+
+            // Prepare form data for sending to the server
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Send the file to the server using Fetch API
+            fetch('http://localhost:5000/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.mismatches && result.mismatches.length > 0) {
+                    // Display the mismatches
+                    let mismatchHtml = '';
+                    result.mismatches.forEach(mismatch => {
+                        mismatchHtml += `<p>Pred: ${mismatch.predicted_disease} | Actual: ${mismatch.actual_disease}</p>`;
+                    });
+                    document.getElementById('mismatch-results').innerHTML = mismatchHtml;
+                } else if (result.error) {
+                    // Handle errors from the server
+                    alert('Error: ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+    
     
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
