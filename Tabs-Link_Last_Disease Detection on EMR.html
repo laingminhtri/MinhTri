@@ -757,36 +757,37 @@ y_test.forEach((actual, i) => {
 
 
     <script>
-        // Example features, modify this according to your input data structure
-        const features = [5.1, 3.5, 1.4, 0.2];  // Sample feature vector
-        const actualDisease = "Iris-setosa";  // Actual disease (ground truth)
+        // Handle form submission for file upload
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission behavior
+            
+            // Get the file input element
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
 
-        // Prepare the data to send to the server
-        const data = {
-            features: features,
-            actual_disease: actualDisease
-        };
+            // Prepare form data for sending to the server
+            const formData = new FormData();
+            formData.append('file', file);
 
-        // Send POST request to server
-        fetch('http://localhost:5000/predict', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            // Display predicted disease and actual disease
-            const predictedDisease = result.predicted_disease;
-            const actualDisease = result.actual_disease;
-
-            // Display the results on the webpage
-            document.getElementById('prediction-result').textContent = `Predicted Disease: ${predictedDisease}`;
-            document.getElementById('actual-disease').textContent = `Actual Disease: ${actualDisease}`;
-        })
-        .catch(error => {
-            console.error('Error:', error);
+            // Send the file to the server using Fetch API
+            fetch('http://localhost:5000/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.predicted_disease && result.actual_disease) {
+                    // Display predicted and actual diseases
+                    document.getElementById('predicted-disease').textContent = result.predicted_disease;
+                    document.getElementById('actual-disease').textContent = result.actual_disease;
+                } else {
+                    // Handle errors from the server (e.g., invalid file type)
+                    alert('Error: ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
     </script>
 
