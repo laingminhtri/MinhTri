@@ -1093,7 +1093,7 @@ y_test.forEach((actual, i) => {
 
 
 
-<h1>Upload Disease Data</h1>
+<!-- <h1>Upload Disease Data</h1>
     <form id="uploadForm" enctype="multipart/form-data">
         <input type="file" id="file" name="file" accept=".csv">
         <button type="submit">Upload</button>
@@ -1145,9 +1145,61 @@ y_test.forEach((actual, i) => {
                 alert('Something went wrong. Please try again.');
             }
         });
+    </script> -->
+
+
+
+<h1>Disease Prediction</h1>
+    <input type="file" id="fileUpload" accept=".csv, .xlsx">
+    <button id="predictButton">Predict</button>
+    <div id="results"></div>
+
+    <script>
+        const fileUpload = document.getElementById('fileUpload');
+        const predictButton = document.getElementById('predictButton');
+        const resultsDiv = document.getElementById('results');
+
+        predictButton.addEventListener('click', async () => {
+            const file = fileUpload.files[0];
+            if (!file) {
+                resultsDiv.textContent = 'Please select a file to upload.';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Replace with your actual server API endpoint URL
+            const url = 'http://your-server-address:5000/predict';
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const predictedDisease = data.predicted_disease;
+                const actualDisease = data.actual_disease; // Assuming you're sending both in the response
+
+                resultsDiv.innerHTML = `
+                    <p>Predicted Disease: ${predictedDisease}</p>
+                    <p>Actual Disease: ${actualDisease}</p>
+                `;
+            } catch (error) {
+                console.error(error);
+                resultsDiv.textContent = 'Error: ' + error.message;
+            }
+        });
     </script>
 
 
+
+    
     
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
