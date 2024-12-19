@@ -1183,12 +1183,12 @@ y_test.forEach((actual, i) => {
                 }
 
                 const data = await response.json();
-                const predictedDisease = data.predicted_disease;
-                const actualDisease = data.actual_disease; // Assuming you're sending both in the response
+                const predictedDisease = data.disease_pred;
+                const actualDisease = data.disease_real; // Assuming you're sending both in the response
 
                 resultsDiv.innerHTML = `
-                    <p>Predicted Disease: ${predictedDisease}</p>
-                    <p>Actual Disease: ${actualDisease}</p>
+                    <p>Predicted Disease: ${disease_pred}</p>
+                    <p>Actual Disease: ${disease_real}</p>
                 `;
             } catch (error) {
                 console.error(error);
