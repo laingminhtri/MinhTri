@@ -1169,6 +1169,8 @@ y_test.forEach((actual, i) => {
             const formData = new FormData();
             formData.append('file', file);
 
+            curl -X POST -F "file=@/content/drive/MyDrive/Disease Symptom/Disease_symptom_and_patient_profile_dataset.csv" http://127.0.0.1:5000//predict
+            
             // Replace with your actual server API endpoint URL
             const url = 'http://127.0.0.1:5000//predict';
 
