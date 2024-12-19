@@ -1149,7 +1149,7 @@ y_test.forEach((actual, i) => {
 
 
 
-<h1>Disease Prediction</h1>
+<!-- <h1>Disease Prediction</h1>
     <input type="file" id="fileUpload" accept=".csv, .xlsx">
     <button id="predictButton">Predict</button>
     <div id="results"></div>
@@ -1197,6 +1197,70 @@ y_test.forEach((actual, i) => {
                 resultsDiv.textContent = 'Error: ' + error.message;
             }
         });
+    </script> -->
+
+
+
+
+<h1>Predicted vs Actual Diseases</h1>
+
+    <!-- File upload form -->
+    <input type="file" id="fileInput" accept=".json,.csv" />
+    <button onclick="uploadFile()">Upload File</button>
+
+    <h2>Results</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Predicted Disease</th>
+                <th>Actual Disease</th>
+            </tr>
+        </thead>
+        <tbody id="resultsTable">
+            <!-- The results will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        function uploadFile() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please select a file.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Send the file to the backend for prediction
+            fetch("http://localhost:5000/predict", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultsTable = document.getElementById("resultsTable");
+                resultsTable.innerHTML = ""; // Clear any previous results
+                
+                data.results.forEach(item => {
+                    const row = document.createElement("tr");
+                    const predictedCell = document.createElement("td");
+                    const actualCell = document.createElement("td");
+
+                    predictedCell.textContent = item.predicted;
+                    actualCell.textContent = item.actual;
+
+                    row.appendChild(predictedCell);
+                    row.appendChild(actualCell);
+                    resultsTable.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
     </script>
 
 
