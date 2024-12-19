@@ -976,7 +976,8 @@ y_test.forEach((actual, i) => {
         for (let i = 0; i < disease_real.length; i++) {
             if (disease_pred[i] !== disease_real[i]) {
                 // Format the output to show predicted vs actual
-                outputElement.textContent += `Pred: ${disease_pred[i]}\nActual: ${disease_real[i]}\n\n`;
+                outputElement.textContent += `Prediction ${i + 1}:\nPredicted: ${disease_pred[i]}\nActual: ${disease_real[i]}\n\n`; 
+      
             }
         }
     </script>
