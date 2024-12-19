@@ -1041,7 +1041,7 @@ y_test.forEach((actual, i) => {
 
 
 
-        <h1>Disease Prediction</h1>
+<!--         <h1>Disease Prediction</h1>
     <input type="file" id="fileUpload" accept=".csv, .xlsx">
     <button id="predictButton">Predict</button>
     <div id="results"></div>
@@ -1087,9 +1087,67 @@ y_test.forEach((actual, i) => {
                 resultsDiv.textContent = 'Error: ' + error.message;
             }
         });
-    </script>
+    </script> -->
 
     
+
+
+
+<h1>Upload Disease Data</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="file" name="file" accept=".csv">
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Prediction Results:</h2>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent form from submitting normally
+            const formData = new FormData();
+            const fileInput = document.getElementById('file');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file');
+                return;
+            }
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                // Send POST request to Flask server
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.error);
+                    return;
+                }
+
+                // Parse the JSON response containing predicted vs actual results
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    // If mismatches exist, create an unordered list to display them
+                    let resultHTML = '<ul>';
+                    data.forEach(mismatch => {
+                        resultHTML += `<li>Predicted Disease: ${mismatch.disease_pred}, Actual Disease: ${mismatch.disease_real}</li>`;
+                    });
+                    resultHTML += '</ul>';
+                    document.getElementById('results').innerHTML = resultHTML;
+                } else {
+                    document.getElementById('results').innerHTML = 'No mismatches found or all predictions are correct.';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    </script>
+
+
     
 
             <div class="tabs__tab" id="Liên hệ" data-tab-info>
