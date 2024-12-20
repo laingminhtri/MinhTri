@@ -1264,7 +1264,45 @@ y_test.forEach((actual, i) => {
     </script>
 
 
+<script> 
+fetch("http://localhost:5000/predict", {
+    method: "POST",
+    body: formData
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
+.then(data => {
+    if (!data.results) {
+        throw new Error('Invalid response format');
+    }
+    const resultsTable = document.getElementById("resultsTable");
+    resultsTable.innerHTML = ""; // Clear any previous results
 
+    data.results.forEach(item => {
+        const row = document.createElement("tr");
+        const predictedCell = document.createElement("td");
+        const actualCell = document.createElement("td");
+
+        predictedCell.textContent = item.predicted;
+        actualCell.textContent = item.actual;
+
+        row.appendChild(predictedCell);
+        row.appendChild(actualCell);
+        resultsTable.appendChild(row);
+    });
+})
+.catch(error => {
+    console.error("Error:", error);
+    alert("An error occurred while processing the file or fetching results.");
+});
+
+</script>
+
+    
     
     
 
