@@ -1302,6 +1302,57 @@ fetch("http://localhost:5000/predict", {
 
 </script>
 
+
+
+
+<h1>Upload your file for Disease Prediction</h1>
+    
+    <!-- File upload form -->
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".csv" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Prediction Results</h2>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let formData = new FormData();
+            formData.append("file", document.getElementById("fileInput").files[0]);
+
+            // Sending the file to the server
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Displaying the results
+                let resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '';  // Clear any previous results
+
+                if (data.length === 0) {
+                    resultDiv.innerHTML = 'No mismatches found.';
+                } else {
+                    data.forEach(item => {
+                        resultDiv.innerHTML += `
+                            <p><strong>Pred:</strong> ${item.predicted}</p>
+                            <p><strong>Actual:</strong> ${item.actual}</p>
+                            <hr>
+                        `;
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+
     
     
     
