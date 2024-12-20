@@ -1353,6 +1353,58 @@ fetch("http://localhost:5000/predict", {
     </script>
 
 
+
+
+<h1>Upload Data File</h1>
+    <input type="file" id="fileInput" accept=".csv, .json">
+    <div id="result"></div>
+
+    <script>
+        // Function to simulate loading the file and making predictions
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+
+                // Simulate data parsing (CSV or JSON)
+                let data;
+                try {
+                    data = JSON.parse(content);  // Assuming the file is in JSON format
+                } catch (err) {
+                    alert("Error reading file. Please upload a valid JSON file.");
+                    return;
+                }
+
+                // Simulating disease predictions and actual results (replace this with actual predictions logic)
+                const diseasePredictions = data.map(item => item.predictedDisease);
+                const diseaseActual = data.map(item => item.actualDisease);
+
+                // Process the predictions and actual results
+                let resultHTML = "";
+                for (let i = 0; i < diseasePredictions.length; i++) {
+                    if (diseasePredictions[i] !== diseaseActual[i]) {
+                        resultHTML += `
+                            <p><strong>Pred:</strong> ${diseasePredictions[i]}<br>
+                            <strong>Actual:</strong> ${diseaseActual[i]}</p>
+                        `;
+                    }
+                }
+
+                // Display the results
+                document.getElementById("result").innerHTML = resultHTML;
+            };
+            reader.readAsText(file);
+        }
+
+        // Add event listener for file input
+        document.getElementById("fileInput").addEventListener("change", handleFileUpload);
+    </script>
+
+
+
     
     
     
