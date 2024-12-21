@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Diseases</title>
+</head>
+<body>
+    <h1> Chọn File EMR cần tầm soát bệnh chuyên sâu</h1>
+
+   
+
+    <input type="file" id="fileInput" accept=".csv, .json" />
+    <button onclick="handlePrediction()">Predict Diseases</button>
+
+    <div id="predictionResults"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script>
+        let model;
+
+        // Load the pre-trained model saved in TensorFlow.js format
+        async function loadModel() {
+            // Load your Keras model converted to TensorFlow.js
+            model = await tf.loadLayersModel('model.json'); // Use the correct path to the model
+            console.log('Model loaded successfully');
+        }
+
+        // Wait until the model is loaded before doing anything else
+        loadModel();
+
+        // Function to handle the file input and prediction
+        async function handlePrediction() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please upload a file first.');
+                return;
+            }
+
+            // Assuming the file is a CSV (or JSON), parse it accordingly
+            const data = await readFile(file);
+            const inputData = preprocessData(data); // Preprocess as needed
+
+            // Predict using the model
+            const prediction = model.predict(inputData).arraySync();
+
+            // Show results
+            displayResults(prediction, data);
+        }
+
+        // Read the uploaded file (CSV or JSON)
+        function readFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const content = event.target.result;
+                    resolve(content);
+                };
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+
+        // Preprocess the data for prediction
+        function preprocessData(data) {
+            // Implement data preprocessing logic here (e.g., parsing CSV, normalizing values)
+            // Example for a simple JSON or CSV conversion:
+
+            // For CSV, convert the text into an array of arrays (like a table of features)
+            const parsedData = parseCSV(data); // Assuming the file is CSV, handle JSON accordingly.
+            const tensorData = tf.tensor(parsedData);
+            return tensorData;
+        }
+
+        // Convert CSV data into an array of feature values
+        function parseCSV(csvText) {
+            const rows = csvText.split('\n').map(row => row.split(','));
+            // Skip headers if needed
+            return rows.slice(1); // Assuming 1st row is headers
+        }
+
+        // Display results (Prediction vs Actual)
+        function displayResults(predictions, actualData) {
+            const resultsDiv = document.getElementById('predictionResults');
+            let htmlContent = '<h3>Predictions vs Actual</h3>';
+
+            // Assuming the actual data is an array of labels or disease names
+            const actual = parseCSV(actualData); // Modify based on your file format (CSV or JSON)
+
+            predictions.forEach((pred, index) => {
+                htmlContent += `
+                    <p>Predicted Disease: ${pred}, Actual Disease: ${actual[index]}</p>
+                `;
+            });
+
+            resultsDiv.innerHTML = htmlContent;
+        }
+    </script>
+</body>
+</html>
