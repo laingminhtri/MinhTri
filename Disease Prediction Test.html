@@ -8,6 +8,7 @@
 
 <head>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <a href="{{ url_for('static', filename='models/save_model.keras') }}">Download Model</a>
 </head>
     
 <body>
@@ -19,6 +20,10 @@
     <button onclick="handlePrediction()">Predict Diseases</button>
 
     <div id="predictionResults"></div>
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script>
